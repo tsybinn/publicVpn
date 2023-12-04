@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="33860986-617b-4c90-853d-e7182cd2ec45" name="vpn">
+        <fileTransfer rootFolder="/home/tsybin/nginx-php-fpm-mysql-bitrix/var/www/public" accessType="SFTP" host="178.208.77.118" port="22" sshConfigId="78faa3f5-dd56-41b5-8480-099751892e02" sshConfig="root@178.208.77.118:22 key" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
