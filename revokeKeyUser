@@ -1,0 +1,42 @@
+#!/bin/bash
+cd /etc/openvpn/easy-rsa
+NAME=$1
+EXPECT_TEXT_CONFIRM="Continue with revocation:"
+EXPECT_TEXT_PASSWORD="Continue with revocation:"
+CONFIRM="yes\n"
+# TODO пароль вводитьь в консоли
+password="7498\n"
+#create key
+DELETE_KEY="
+    set timeout 1
+    spawn ./easyrsa revoke $NAME
+    expect \"$EXPECT_TEXT_CONFIRM\"
+    send \"$CONFIRM\"
+    expect \"$EXPECT_TEXT_PASSWORD\"
+    send \"$password\"
+expect eof"
+
+expect -c "$DELETE_KEY"
+
+# delete key
+if [ -f /etc/openvpn/easy-rsa/pki/issued/$NAME.crt ]
+then
+  echo "error"
+else
+ rm -R /home/tsybin/keysVpn/$NAME
+ echo "key user $NAME delete"
+fi
+
+
+
+
+
+
+
+
+
+
+
+
+
+

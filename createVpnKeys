@@ -1,0 +1,71 @@
+#!/bin/bash
+cd /etc/openvpn/easy-rsa
+NAME=$1
+EXPECT_TEXT="Enter pass phrase for /etc/openvpn/easy-rsa/pki/private/ca.key:"
+KEY_DIR=/home/tsybin/keysVpn/$NAME
+OUTPUT_DIR=/home/tsybin/keysVpn/$NAME
+BASE_CONFIG=/home/tsybin/keysVpn/base.conf
+COMMAND="./easyrsa build-client-full $NAME nopass"
+# TODO пароль вводитьь в консоли
+password="7498\n"
+#create key
+COMMSHOW="
+puts $(pwd)
+    set timeout 3
+    spawn ./easyrsa build-client-full $NAME nopass
+    expect \"$exShow\"
+    send \"$password\"
+
+expect eof "
+
+expect -c "$COMMSHOW"
+
+# copy key
+if [ -f /etc/openvpn/easy-rsa/pki/issued/$NAME.crt ]
+then
+     cd /home/tsybin/keysVpn
+  rm -R $NAME
+  mkdir $NAME
+  cd /etc/openvpn/easy-rsa
+  chmod -R 777 pki
+  cp pki/issued/$NAME.crt pki/private/$NAME.key pki/ca.crt pki/ta.key /home/tsybin/keysVpn/$NAME
+echo "key coping"
+else
+  echo "no file"
+fi
+
+cd /home/tsybin/keysVpn/
+
+cat ${BASE_CONFIG} \
+    <(echo -e '<ca>') \
+    ${KEY_DIR}/ca.crt \
+    <(echo -e '</ca>\n<cert>') \
+    ${KEY_DIR}/$NAME.crt \
+    <(echo -e '</cert>\n<key>') \
+    ${KEY_DIR}/$NAME.key \
+    <(echo -e '</key>\n<tls-crypt>') \
+    ${KEY_DIR}/ta.key \
+    <(echo -e '</tls-crypt>') \
+    > ${OUTPUT_DIR}/$NAME.ovpn
+
+if [ -f ${OUTPUT_DIR}/$NAME.ovpn ]
+then echo "key user create"
+else echo "key not user create"
+fi
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

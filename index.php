@@ -77,7 +77,7 @@ Body Content
     <div class="container">
         <div class="row">
         	<div class="text-center mb-50 head">
-            	<h2 style="color:#fff" class="mb-25">Бесплатно</h2>
+                <h2 style="color:#fff" class="mb-25">Бесплатно</h2>
 			</div>
             <div class="col-sm-4" style="text-align:center; color:#fff; ">
                 <figure style="color:#ffc000">
